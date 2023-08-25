@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="blogsitemap" resource="default" engine="innodb" comment="XML Blog Sitemap">
+        <column xsi:type="int" name="blogsitemap_id" unsigned="true" nullable="false" identity="true"
+                comment="BlogSitemap ID"/>
+        <column xsi:type="varchar" name="blogsitemap_type" nullable="true" length="32" comment="BlogSitemap Type"/>
+        <column xsi:type="varchar" name="blogsitemap_filename" nullable="true" length="32" comment="BlogSitemap Filename"/>
+        <column xsi:type="varchar" name="blogsitemap_path" nullable="true" length="255" comment="BlogSitemap Path"/>
+        <column xsi:type="timestamp" name="blogsitemap_time" on_update="false" nullable="true" comment="BlogSitemap Time"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Store ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="blogsitemap_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="SITEMAP_STORE_ID_STORE_STORE_ID" table="blogsitemap" column="store_id"
+                    referenceTable="store" referenceColumn="store_id" onDelete="CASCADE"/>
+        <index referenceId="SITEMAP_STORE_ID" indexType="btree">
+            <column name="store_id"/>
+        </index>
+    </table>
+</schema>

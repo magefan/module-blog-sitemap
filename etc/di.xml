@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magefan\BlogSitemap\Model\BlogSitemapItemInterface" type="Magefan\BlogSitemap\Model\BlogSitemapItem" />
+    <preference for="Magefan\BlogSitemap\Model\ItemProvider\ItemProviderInterface" type="Magefan\BlogSitemap\Model\ItemProvider\Composite" />
+    <preference for="Magefan\BlogSitemap\Model\BlogSitemapConfigReaderInterface" type="Magefan\BlogSitemap\Model\BlogSitemapConfigReader" />
+
+    <type name="Magefan\BlogSitemap\Model\BlogSitemap">
+        <arguments>
+            <argument name="resource" xsi:type="object">Magefan\BlogSitemap\Model\ResourceModel\BlogSitemap</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="blogsitemap/generate/error_email" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magefan\BlogSitemap\Model\ItemProvider\Composite">
+        <arguments>
+            <argument name="itemProviders" xsi:type="array">
+                <item name="blogIndexUrlProvider" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogIndex</item>
+                <item name="blogPostProvider" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogPost</item>
+                <item name="blogCategoryProvider" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogCategory</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magefan\BlogSitemap\Model\ItemProvider\BlogIndex">
+        <arguments>
+            <argument name="configReader" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogIndexConfigReader</argument>
+        </arguments>
+    </type>
+    <type name="Magefan\BlogSitemap\Model\ItemProvider\BlogPost">
+        <arguments>
+            <argument name="configReader" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogPostConfigReader</argument>
+        </arguments>
+    </type>
+    <type name="Magefan\BlogSitemap\Model\ItemProvider\BlogCategory">
+        <arguments>
+            <argument name="configReader" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogCategoryConfigReader</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Blog\Model\Wysiwyg\Images\Storage">
+        <arguments>
+            <argument name="dirs" xsi:type="array">
+                <item name="exclude" xsi:type="array">
+                    <item name="blogsitemap" xsi:type="array">
+                        <item name="regexp" xsi:type="boolean">true</item>
+                        <item name="name" xsi:type="string">media[/\\]+blogsitemap[/\\]*$</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

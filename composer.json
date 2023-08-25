@@ -1,0 +1,25 @@
+{
+    "name": "magefan/module-blog-sitemap",
+    "description": "N/A",
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "version": "2.0.0",
+    "require": {
+        "magento/module-blog": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Magento\\BlogSitemap\\": ""
+        }
+    }
+}
+

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <blogsitemap>
+            <limit>
+                <max_lines>50000</max_lines>
+                <max_file_size>10485760</max_file_size>
+            </limit>
+            <index>
+                <priority>1</priority>
+                <changefreq>daily</changefreq>
+            </index>
+            <post>
+                <priority>0.5</priority>
+                <changefreq>daily</changefreq>
+                <image_include>all</image_include>
+            </post>
+            <category>
+                <priority>0.8</priority>
+                <changefreq>daily</changefreq>
+            </category>
+            <generate>
+                <enabled>1</enabled>
+                <error_email />
+                <error_email_template>blogsitemap_generate_error_email_template</error_email_template>
+                <error_email_identity>general</error_email_identity>
+            </generate>
+            <search_engines>
+                <submission_robots>1</submission_robots>
+            </search_engines>
+            <file>
+                <valid_paths>
+                    <available>
+                        <any_path>/*/*.xml</any_path>
+                    </available>
+                </valid_paths>
+            </file>
+        </blogsitemap>
+        <crontab>
+            <default>
+                <jobs>
+                    <blogsitemap_generate>
+                        <schedule>
+                            <cron_expr>0 0 * * *</cron_expr>
+                        </schedule>
+                    </blogsitemap_generate>
+                </jobs>
+            </default>
+        </crontab>
+        <system>
+            <media_storage_configuration>
+                <allowed_resources>
+                    <blogsitemap_folder>blogsitemap</blogsitemap_folder>
+                </allowed_resources>
+            </media_storage_configuration>
+        </system>
+    </default>
+</config>

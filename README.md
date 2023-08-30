@@ -8,7 +8,7 @@
 <img width="150" height="100" src="https://magefan.com/media/wysiwyg/made_in_ukraine.jpg">
 
 
-Magento 2 Blog Sitemap is an extension that allows you manage XML Sitemaps for Magento 2 Blog Extension by Magefan
+Magento 2 Blog Sitemap is an extension that allows you manage XML Sitemaps for [Magento 2 Blog Extension](https://magefan.com/magento2-blog-extension) by Magefan.
 
 
 ## Installation
@@ -22,7 +22,14 @@ php bin/magento setup:upgrade
 php bin/magento setup:di:compile
 php bin/magento setup:static-content:deploy
 ```
+## Configuration
+Once you install the extension you get a separate set of settings for blog XML Sitemap (same as default Magento XML sitemap).
 
+<img src="https://cm.magefan.com/blog/magento-blog-xml-sitemap-settings.png">
+
+You can also go to <strong>Marketing > Seo & Search > Blog Site Map </strong> and generate a blog sitemap.
+
+<img src="https://cm.magefan.com/blog/xml-sitemap-for-blog-magento.png">
 
 ## License
 The code is licensed under [Open Software License](https://github.com/magefan/module-blog-sitemap/blob/main/LICENSE.txt).

@@ -290,15 +290,15 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
             self::TYPE_INDEX => [
                 self::OPEN_TAG_KEY => '<?xml version="1.0" encoding="UTF-8"?>' .
                     PHP_EOL .
-                    '<blogsitemapindex xmlns="http://www.blogsitemaps.org/schemas/blogsitemap/0.9">' .
+                    '<blogsitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' .
                     PHP_EOL,
                 self::CLOSE_TAG_KEY => '</blogsitemapindex>',
             ],
             self::TYPE_URL => [
                 self::OPEN_TAG_KEY => '<?xml version="1.0" encoding="UTF-8"?>' .
                     PHP_EOL .
-                    '<urlset xmlns="http://www.blogsitemaps.org/schemas/blogsitemap/0.9"' .
-                    ' xmlns:image="http://www.google.com/schemas/blogsitemap-image/1.1">' .
+                    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"' .
+                    ' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">' .
                     PHP_EOL,
                 self::CLOSE_TAG_KEY => '</urlset>',
             ],

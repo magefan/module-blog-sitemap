@@ -61,6 +61,7 @@ The code is licensed under [Open Software License](https://github.com/magefan/mo
   * [Magento 2 Google Customer Reviews](https://magefan.com/magento-2-google-customer-reviews)
   * [Magento 2 Email Attachments](https://magefan.com/magento-2-email-attachments)
   * [Magento 2 Cron Schedule](https://magefan.com/magento-2-cron-schedule)
+  * [Magento 2 Google Indexing API](https://magefan.com/magento-2-google-indexing-api)
     
 ### [Magento 2 Blog Extensions](https://magefan.com/magento-2-extensions/blog-extensions)
 

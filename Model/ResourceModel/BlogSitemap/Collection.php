@@ -12,6 +12,12 @@ namespace Magefan\BlogSitemap\Model\ResourceModel\BlogSitemap;
  */
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
+
+    /**
+     * @inheritDoc
+     */
+    protected $_idFieldName = 'blogsitemap_id';
+    
     /**
      * Init collection
      *

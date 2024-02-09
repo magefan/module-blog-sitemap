@@ -28,6 +28,8 @@
                 <item name="blogIndexUrlProvider" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogIndex</item>
                 <item name="blogPostProvider" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogPost</item>
                 <item name="blogCategoryProvider" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogCategory</item>
+                <item name="blogTagProvider" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogTag</item>
+                <item name="blogAuthorProvider" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogAuthor</item>
             </argument>
         </arguments>
     </type>
@@ -44,6 +46,16 @@
     <type name="Magefan\BlogSitemap\Model\ItemProvider\BlogCategory">
         <arguments>
             <argument name="configReader" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogCategoryConfigReader</argument>
+        </arguments>
+    </type>
+    <type name="Magefan\BlogSitemap\Model\ItemProvider\BlogTag">
+        <arguments>
+            <argument name="configReader" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogTagConfigReader</argument>
+        </arguments>
+    </type>
+    <type name="Magefan\BlogSitemap\Model\ItemProvider\BlogAuthor">
+        <arguments>
+            <argument name="configReader" xsi:type="object">Magefan\BlogSitemap\Model\ItemProvider\BlogAuthorConfigReader</argument>
         </arguments>
     </type>
     <type name="Magento\Blog\Model\Wysiwyg\Images\Storage">

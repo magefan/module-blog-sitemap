@@ -6,17 +6,18 @@
 
 namespace Magefan\BlogSitemap\Model\ItemProvider;
 
-use Magefan\Blog\Model\ResourceModel\Category\CollectionFactory;
+use Magefan\Blog\Api\AuthorCollectionInterfaceFactory as CollectionFactory;
 use Magefan\BlogSitemap\Model\BlogSitemapItemInterfaceFactory;
+use Magento\Framework\Module\Manager;
 
-class BlogCategory implements ItemProviderInterface
+class BlogAuthor implements ItemProviderInterface
 {
     /**
      * Category factory
      *
      * @var CollectionFactory
      */
-    private $categoryFactory;
+    private $authorFactory;
 
     /**
      * Sitemap item factory
@@ -33,20 +34,28 @@ class BlogCategory implements ItemProviderInterface
     private $configReader;
 
     /**
-     * CategorySitemapItemResolver constructor.
+     * @var Manager
+     */
+    private $moduleManager;
+
+    /**
+     * BlogAuthor constructor.
      *
      * @param ConfigReaderInterface $configReader
-     * @param CollectionFactory $categoryFactory
+     * @param CollectionFactory $authorFactory
      * @param BlogSitemapItemInterfaceFactory $itemFactory
+     * @param Manager $moduleManager
      */
     public function __construct(
         ConfigReaderInterface $configReader,
-        CollectionFactory $categoryFactory,
-        BlogSitemapItemInterfaceFactory $itemFactory
+        CollectionFactory $authorFactory,
+        BlogSitemapItemInterfaceFactory $itemFactory,
+        Manager $moduleManager
     ) {
-        $this->categoryFactory = $categoryFactory;
+        $this->authorFactory = $authorFactory;
         $this->itemFactory = $itemFactory;
         $this->configReader = $configReader;
+        $this->moduleManager = $moduleManager;
     }
 
     /**
@@ -54,10 +63,16 @@ class BlogCategory implements ItemProviderInterface
      */
     public function getItems($storeId)
     {
-        $collection = $this->categoryFactory->create()
-            ->addStoreFilter($storeId)
-            ->addActiveFilter()
-            ->getItems();
+        if ($this->moduleManager->isEnabled('Magefan_BlogAuthor')) {
+            $collection = $this->authorFactory->create()
+                ->addStoreFilter($storeId)
+                ->addActiveFilter()
+                ->getItems();
+        } else {
+            $collection = $this->authorFactory->create()
+                ->addFieldToFilter('is_active', 1)
+                ->getItems();
+        }
 
         $items = array_map(function ($item) use ($storeId) {
             return $this->itemFactory->create([

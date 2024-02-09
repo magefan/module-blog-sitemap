@@ -25,6 +25,14 @@
                 <priority>0.8</priority>
                 <changefreq>daily</changefreq>
             </category>
+            <tag>
+                <priority>0.8</priority>
+                <changefreq>daily</changefreq>
+            </tag>
+            <author>
+                <priority>0.8</priority>
+                <changefreq>daily</changefreq>
+            </author>
             <generate>
                 <enabled>1</enabled>
                 <error_email />

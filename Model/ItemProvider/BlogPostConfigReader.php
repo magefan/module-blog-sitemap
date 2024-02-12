@@ -16,6 +16,7 @@ class BlogPostConfigReader implements ConfigReaderInterface
      */
     const XML_PATH_CHANGE_FREQUENCY = 'blogsitemap/post/changefreq';
     const XML_PATH_PRIORITY = 'blogsitemap/post/priority';
+    const XML_PATH_IS_ENABLED = 'blogsitemap/post/enabled';
     /**#@-*/
 
     /**
@@ -54,6 +55,18 @@ class BlogPostConfigReader implements ConfigReaderInterface
     {
         return (string)$this->scopeConfig->getValue(
             self::XML_PATH_CHANGE_FREQUENCY,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEnabled($storeId)
+    {
+        return (string)$this->scopeConfig->getValue(
+            self::XML_PATH_IS_ENABLED,
             ScopeInterface::SCOPE_STORE,
             $storeId
         );

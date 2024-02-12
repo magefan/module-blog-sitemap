@@ -54,6 +54,10 @@ class BlogPost implements ItemProviderInterface
      */
     public function getItems($storeId)
     {
+        if (!$this->configReader->isEnabled($storeId)) {
+            return [];
+        }
+
         $collection = $this->postFactory->create()
             ->addStoreFilter($storeId)
             ->addActiveFilter()

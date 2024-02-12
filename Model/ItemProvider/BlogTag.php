@@ -54,6 +54,10 @@ class BlogTag implements ItemProviderInterface
      */
     public function getItems($storeId)
     {
+        if (!$this->configReader->isEnabled($storeId)) {
+            return [];
+        }
+
         $collection = $this->tagFactory->create()
             ->addStoreFilter($storeId)
             ->addActiveFilter()

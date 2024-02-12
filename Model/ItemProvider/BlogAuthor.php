@@ -63,6 +63,10 @@ class BlogAuthor implements ItemProviderInterface
      */
     public function getItems($storeId)
     {
+        if (!$this->configReader->isEnabled($storeId)) {
+            return [];
+        }
+
         if ($this->moduleManager->isEnabled('Magefan_BlogAuthor')) {
             $collection = $this->authorFactory->create()
                 ->addStoreFilter($storeId)

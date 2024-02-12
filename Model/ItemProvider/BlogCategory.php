@@ -54,6 +54,10 @@ class BlogCategory implements ItemProviderInterface
      */
     public function getItems($storeId)
     {
+        if (!$this->configReader->isEnabled($storeId)) {
+            return [];
+        }
+
         $collection = $this->categoryFactory->create()
             ->addStoreFilter($storeId)
             ->addActiveFilter()

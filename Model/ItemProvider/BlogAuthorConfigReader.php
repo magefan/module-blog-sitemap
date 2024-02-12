@@ -16,6 +16,9 @@ class BlogAuthorConfigReader implements ConfigReaderInterface
      */
     const XML_PATH_CHANGE_FREQUENCY = 'blogsitemap/author/changefreq';
     const XML_PATH_PRIORITY = 'blogsitemap/author/priority';
+    const XML_PATH_IS_ENABLED = 'blogsitemap/author/enabled';
+    const XML_AUTHOR_ROBOTS = 'mfblog/author/robots';
+    const XML_AUTHOR_PAGE_ENABLED = 'mfblog/author/page_enabled';
     /**#@-*/
 
     /**
@@ -57,5 +60,32 @@ class BlogAuthorConfigReader implements ConfigReaderInterface
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEnabled($storeId)
+    {
+        $isEnabled = (string)$this->scopeConfig->getValue(
+            self::XML_PATH_IS_ENABLED,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+            );
+
+        $authorRobots = $this->scopeConfig->getValue(
+        self::XML_AUTHOR_ROBOTS,
+             ScopeInterface::SCOPE_STORE,
+             $storeId
+            );
+        $authorRobots = $authorRobots == 'INDEX,FOLLOW' || $authorRobots == 'NOINDEX,FOLLOW';
+
+        $authorPage = $this->scopeConfig->getValue(
+            self::XML_AUTHOR_PAGE_ENABLED,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+        return $isEnabled && $authorPage && $authorRobots;
     }
 }

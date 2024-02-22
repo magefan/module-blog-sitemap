@@ -56,6 +56,9 @@ class BlogIndex implements ItemProviderInterface
      */
     public function getItems($storeId)
     {
+        if (!$this->configReader->isEnabled($storeId)) {
+            return [];
+        }
 
         $url = $this->blogUrl->getBasePath();
 

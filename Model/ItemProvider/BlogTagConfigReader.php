@@ -1,7 +1,7 @@
 <?php
 /**
- * Copyright © Magefan (support@magefan.com). All rights reserved.
- * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
  */
 
 namespace Magefan\BlogSitemap\Model\ItemProvider;
@@ -9,17 +9,15 @@ namespace Magefan\BlogSitemap\Model\ItemProvider;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
-/**
- * Class for getting configuration for Store Url
- */
-class BlogIndexConfigReader implements ConfigReaderInterface
+class BlogTagConfigReader implements ConfigReaderInterface
 {
     /**#@+
      * Xpath config settings
      */
-    const XML_PATH_CHANGE_FREQUENCY = 'blogsitemap/index/changefreq';
-    const XML_PATH_PRIORITY = 'blogsitemap/index/priority';
-    const XML_PATH_IS_ENABLED = 'blogsitemap/index/enabled';
+    const XML_PATH_CHANGE_FREQUENCY = 'blogsitemap/tag/changefreq';
+    const XML_PATH_PRIORITY = 'blogsitemap/tag/priority';
+    const XML_PATH_IS_ENABLED = 'blogsitemap/tag/enabled';
+    const XML_TAG_ROBOTS = 'mfblog/tag/robots';
     /**#@-*/
 
     /**
@@ -40,7 +38,7 @@ class BlogIndexConfigReader implements ConfigReaderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getPriority($storeId)
     {
@@ -52,7 +50,7 @@ class BlogIndexConfigReader implements ConfigReaderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getChangeFrequency($storeId)
     {
@@ -68,10 +66,19 @@ class BlogIndexConfigReader implements ConfigReaderInterface
      */
     public function isEnabled($storeId)
     {
-        return (string)$this->scopeConfig->getValue(
+        $isEnabled = (string)$this->scopeConfig->getValue(
             self::XML_PATH_IS_ENABLED,
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
+
+        $tagRobots = $this->scopeConfig->getValue(
+            self::XML_TAG_ROBOTS,
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+        $tagRobots = $tagRobots == 'INDEX,FOLLOW' || $tagRobots == 'NOINDEX,FOLLOW';
+
+        return $isEnabled && $tagRobots;
     }
 }

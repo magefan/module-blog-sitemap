@@ -6,17 +6,17 @@
 
 namespace Magefan\BlogSitemap\Model\ItemProvider;
 
-use Magefan\Blog\Model\ResourceModel\Category\CollectionFactory;
+use Magefan\Blog\Model\ResourceModel\Tag\CollectionFactory;
 use Magefan\BlogSitemap\Model\BlogSitemapItemInterfaceFactory;
 
-class BlogCategory implements ItemProviderInterface
+class BlogTag implements ItemProviderInterface
 {
     /**
-     * Category factory
+     * Tag factory
      *
      * @var CollectionFactory
      */
-    private $categoryFactory;
+    private $tagFactory;
 
     /**
      * Sitemap item factory
@@ -36,15 +36,15 @@ class BlogCategory implements ItemProviderInterface
      * CategorySitemapItemResolver constructor.
      *
      * @param ConfigReaderInterface $configReader
-     * @param CollectionFactory $categoryFactory
+     * @param CollectionFactory $tagFactory
      * @param BlogSitemapItemInterfaceFactory $itemFactory
      */
     public function __construct(
         ConfigReaderInterface $configReader,
-        CollectionFactory $categoryFactory,
+        CollectionFactory $tagFactory,
         BlogSitemapItemInterfaceFactory $itemFactory
     ) {
-        $this->categoryFactory = $categoryFactory;
+        $this->tagFactory = $tagFactory;
         $this->itemFactory = $itemFactory;
         $this->configReader = $configReader;
     }
@@ -58,7 +58,7 @@ class BlogCategory implements ItemProviderInterface
             return [];
         }
 
-        $collection = $this->categoryFactory->create()
+        $collection = $this->tagFactory->create()
             ->addStoreFilter($storeId)
             ->addActiveFilter()
             ->getItems();

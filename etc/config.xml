@@ -13,18 +13,31 @@
                 <max_file_size>10485760</max_file_size>
             </limit>
             <index>
+                <enabled>1</enabled>
                 <priority>1</priority>
                 <changefreq>daily</changefreq>
             </index>
             <post>
+                <enabled>1</enabled>
                 <priority>0.5</priority>
                 <changefreq>daily</changefreq>
                 <image_include>all</image_include>
             </post>
             <category>
+                <enabled>1</enabled>
                 <priority>0.8</priority>
                 <changefreq>daily</changefreq>
             </category>
+            <tag>
+                <enabled>0</enabled>
+                <priority>0.8</priority>
+                <changefreq>daily</changefreq>
+            </tag>
+            <author>
+                <enabled>0</enabled>
+                <priority>0.8</priority>
+                <changefreq>daily</changefreq>
+            </author>
             <generate>
                 <enabled>1</enabled>
                 <error_email />

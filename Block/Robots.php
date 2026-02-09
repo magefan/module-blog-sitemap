@@ -111,7 +111,7 @@ class Robots extends AbstractBlock implements IdentityInterface
          */
         foreach ($collection as $blogsitemap) {
             $blogsitemapUrl = $blogsitemap->getBlogsitemapUrl($blogsitemap->getBlogsitemapPath(), $blogsitemap->getBlogsitemapFilename());
-            $blogsitemapLinks[$blogsitemapUrl] = 'BlogSitemap: ' . $blogsitemapUrl;
+            $blogsitemapLinks[$blogsitemapUrl] = 'Sitemap: ' . $blogsitemapUrl;
         }
 
         return $blogsitemapLinks;

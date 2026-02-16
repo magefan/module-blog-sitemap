@@ -87,7 +87,7 @@ class Save extends BlogSitemap implements HttpPostActionInterface
      * @return bool
      * @throws \Exception
      */
-    protected function validatePath(array $data)
+    protected function validatePath(array $data): bool
     {
         if (!empty($data['blogsitemap_filename']) && !empty($data['blogsitemap_path'])) {
             $data['blogsitemap_path'] = '/' . ltrim($data['blogsitemap_path'], '/');

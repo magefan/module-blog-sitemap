@@ -87,7 +87,7 @@ class Observer
      * @throws \Exception
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */
-    public function scheduledGenerateBlogSitemaps()
+    public function scheduledGenerateBlogSitemaps(): void
     {
         $errors = [];
         $recipient = $this->scopeConfig->getValue(

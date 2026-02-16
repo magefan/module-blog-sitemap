@@ -13,7 +13,7 @@ class NewAction extends \Magefan\BlogSitemap\Controller\Adminhtml\BlogSitemap
      *
      * @return void
      */
-    public function execute()
+    public function execute(): void
     {
         // the same form is used to create and edit
         $this->_forward('edit');

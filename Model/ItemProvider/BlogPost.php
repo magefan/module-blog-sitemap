@@ -51,8 +51,9 @@ class BlogPost implements ItemProviderInterface
 
     /**
      * {@inheritdoc}
+     * @return mixed[]
      */
-    public function getItems($storeId)
+    public function getItems($storeId): array
     {
         if (!$this->configReader->isEnabled($storeId)) {
             return [];

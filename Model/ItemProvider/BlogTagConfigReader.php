@@ -40,7 +40,7 @@ class BlogTagConfigReader implements ConfigReaderInterface
     /**
      * {@inheritdoc}
      */
-    public function getPriority($storeId)
+    public function getPriority($storeId): string
     {
         return (string)$this->scopeConfig->getValue(
             self::XML_PATH_PRIORITY,
@@ -52,7 +52,7 @@ class BlogTagConfigReader implements ConfigReaderInterface
     /**
      * {@inheritdoc}
      */
-    public function getChangeFrequency($storeId)
+    public function getChangeFrequency($storeId): string
     {
         return (string)$this->scopeConfig->getValue(
             self::XML_PATH_CHANGE_FREQUENCY,
@@ -64,7 +64,7 @@ class BlogTagConfigReader implements ConfigReaderInterface
     /**
      * {@inheritdoc}
      */
-    public function isEnabled($storeId)
+    public function isEnabled($storeId): bool
     {
         $isEnabled = (string)$this->scopeConfig->getValue(
             self::XML_PATH_IS_ENABLED,

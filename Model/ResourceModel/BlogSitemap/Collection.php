@@ -23,7 +23,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      *
      * @return void
      */
-    public function _construct()
+    public function _construct(): void
     {
         $this->_init(\Magefan\BlogSitemap\Model\BlogSitemap::class, \Magefan\BlogSitemap\Model\ResourceModel\BlogSitemap::class);
     }
@@ -34,7 +34,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * @param array|int[] $storeIds
      * @return $this
      */
-    public function addStoreFilter($storeIds)
+    public function addStoreFilter($storeIds): static
     {
         $this->getSelect()->where('main_table.store_id IN (?)', $storeIds);
         return $this;

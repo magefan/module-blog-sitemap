@@ -16,7 +16,7 @@ class Index extends \Magefan\BlogSitemap\Controller\Adminhtml\BlogSitemap implem
      *
      * @return void
      */
-    public function execute()
+    public function execute(): void
     {
         $this->_initAction();
         $this->_view->getPage()->getConfig()->getTitle()->prepend(__('Blog Site Map'));

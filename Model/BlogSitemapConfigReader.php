@@ -94,7 +94,7 @@ class BlogSitemapConfigReader implements BlogSitemapConfigReaderInterface
     /**
      * {@inheritdoc}
      */
-    public function getPostImageIncludePolicy($storeId)
+    public function getPostImageIncludePolicy($storeId): string
     {
         return (string)$this->scopeConfig->getValue(
             self::XML_PATH_POST_IMAGES_INCLUDE,
@@ -106,7 +106,7 @@ class BlogSitemapConfigReader implements BlogSitemapConfigReaderInterface
     /**
      * {@inheritdoc}
      */
-    public function getValidPaths()
+    public function getValidPaths(): array
     {
         return array_merge(
             $this->scopeConfig->getValue(self::XML_PATH_SITEMAP_VALID_PATHS, ScopeInterface::SCOPE_STORE),

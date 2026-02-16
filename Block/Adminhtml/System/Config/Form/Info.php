@@ -19,7 +19,7 @@ class Info extends \Magefan\Community\Block\Adminhtml\System\Config\Form\Info
      * Return extension url
      * @return string
      */
-    protected function getModuleUrl()
+    protected function getModuleUrl(): string
     {
         return 'https://mage' . 'fan.com/?utm_source=m2admin_blogsitemap_config&utm_medium=link&utm_campaign=regular';
     }
@@ -28,7 +28,7 @@ class Info extends \Magefan\Community\Block\Adminhtml\System\Config\Form\Info
      * Return extension title
      * @return string
      */
-    protected function getModuleTitle()
+    protected function getModuleTitle(): string
     {
         return 'XML Blog Sitemap Extension';
     }

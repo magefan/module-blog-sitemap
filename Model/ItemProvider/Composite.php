@@ -27,8 +27,9 @@ class Composite implements ItemProviderInterface
 
     /**
      * {@inheritdoc}
+     * @return mixed[]
      */
-    public function getItems($storeId)
+    public function getItems($storeId): array
     {
         $items = [];
 

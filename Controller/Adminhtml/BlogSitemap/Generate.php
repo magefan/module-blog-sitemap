@@ -40,7 +40,7 @@ class Generate extends BlogSitemap implements HttpGetActionInterface
      *
      * @return void
      */
-    public function execute()
+    public function execute(): void
     {
         // init and load blogsitemap model
         $id = $this->getRequest()->getParam('blogsitemap_id');

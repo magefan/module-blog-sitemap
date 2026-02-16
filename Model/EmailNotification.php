@@ -66,7 +66,7 @@ class EmailNotification
      *
      * @param array| $errors
      */
-    public function sendErrors($errors)
+    public function sendErrors($errors): void
     {
         $this->inlineTranslation->suspend();
         try {

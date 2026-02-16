@@ -371,7 +371,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      *
      * @return $this
      */
-    public function generateXml()
+    public function generateXml(): static
     {
         $this->_initBlogSitemapItems();
 
@@ -439,7 +439,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      *
      * @return string
      */
-    protected function _getCurrentDateTime()
+    protected function _getCurrentDateTime(): string
     {
         return (new \DateTime())->format(\Magento\Framework\Stdlib\DateTime::DATETIME_PHP_FORMAT);
     }
@@ -450,7 +450,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * @param string $row
      * @return bool
      */
-    protected function _isSplitRequired($row)
+    protected function _isSplitRequired($row): bool
     {
         $storeId = $this->getStoreId();
         if ($this->_lineCount + 1 > $this->configReader->getMaximumLinesNumber($storeId)) {
@@ -479,7 +479,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * BlogSitemap PageMap
      * @see http://support.google.com/customsearch/bin/answer.py?hl=en&answer=1628213
      */
-    protected function _getBlogsitemapRow($url, $lastmod = null, $changefreq = null, $priority = null, $images = null)
+    protected function _getBlogsitemapRow($url, $lastmod = null, $changefreq = null, $priority = null, $images = null): string
     {
         $url = $this->_getUrl($url);
         $row = '<loc>' . $this->_escaper->escapeUrl($url) . '</loc>';
@@ -541,7 +541,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * @param null|string $lastmod
      * @return string
      */
-    protected function _getBlogsitemapIndexRow($blogsitemapFilename, $lastmod = null)
+    protected function _getBlogsitemapIndexRow($blogsitemapFilename, $lastmod = null): string
     {
         $url = $this->getBlogsitemapUrl($this->getBlogsitemapPath(), $blogsitemapFilename);
         $row = '<loc>' . $this->_escaper->escapeUrl($url) . '</loc>';
@@ -581,7 +581,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * @param string $row
      * @return void
      */
-    protected function _writeBlogSitemapRow($row)
+    protected function _writeBlogSitemapRow(string $row)
     {
         $this->_getStream()->write($row . PHP_EOL);
     }
@@ -610,7 +610,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * @param int $index
      * @return string
      */
-    protected function _getCurrentBlogSitemapFilename($index)
+    protected function _getCurrentBlogSitemapFilename($index): string
     {
         return ($this->getBlogsitemapFilename() !== null ? str_replace('.xml', '', $this->getBlogsitemapFilename()) : '')
             . '-' . $this->getStoreId() . '-' . $index . '.xml';
@@ -632,7 +632,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * @param string $type
      * @return string
      */
-    protected function _getStoreBaseUrl($type = UrlInterface::URL_TYPE_LINK)
+    protected function _getStoreBaseUrl($type = UrlInterface::URL_TYPE_LINK): string
     {
         /** @var \Magento\Store\Model\Store $store */
         $store = $this->_storeManager->getStore($this->getStoreId());
@@ -647,7 +647,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * @param string $type
      * @return string
      */
-    protected function _getUrl($url, $type = UrlInterface::URL_TYPE_LINK)
+    protected function _getUrl($url, $type = UrlInterface::URL_TYPE_LINK): string
     {
         return $this->_getStoreBaseUrl($type) . ($url !== null ? ltrim($url, '/') : '');
     }
@@ -658,7 +658,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * @param string $date
      * @return string
      */
-    protected function _getFormattedLastmodDate($date)
+    protected function _getFormattedLastmodDate($date): string
     {
         if ($this->lastModMinTsVal === null) {
             $this->lastModMinTsVal = strtotime(self::LAST_MOD_MIN_VAL);
@@ -686,7 +686,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      *
      * @return string
      */
-    protected function _getStoreBaseDomain()
+    protected function _getStoreBaseDomain(): string
     {
         // phpcs:ignore Magento2.Functions.DiscouragedFunction
         $storeParsedUrl = parse_url($this->_getStoreBaseUrl());
@@ -719,7 +719,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * @param string $blogsitemapFileName
      * @return string
      */
-    public function getBlogsitemapUrl($blogsitemapPath, $blogsitemapFileName)
+    public function getBlogsitemapUrl(string $blogsitemapPath, string $blogsitemapFileName)
     {
         return $this->_getStoreBaseDomain() . str_replace('//', '/', $blogsitemapPath . '/' . $blogsitemapFileName);
     }
@@ -746,7 +746,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      *
      * @return array
      */
-    private function mapToBlogSitemapItem()
+    private function mapToBlogSitemapItem(): array
     {
         $items = [];
 

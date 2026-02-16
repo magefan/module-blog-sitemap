@@ -41,7 +41,7 @@ class Edit extends BlogSitemap implements HttpGetActionInterface
      * @return void
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function execute()
+    public function execute(): void
     {
         // 1. Get ID and create model
         $id = $this->getRequest()->getParam('blogsitemap_id');

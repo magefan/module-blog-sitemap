@@ -3,6 +3,8 @@
  * Copyright © Magefan (support@magefan.com). All rights reserved.
  * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
  */
+declare(strict_types=1);
+
 namespace Magefan\BlogSitemap\Block;
 
 use Magento\Framework\DataObject\IdentityInterface;
@@ -46,11 +48,9 @@ class Robots extends AbstractBlock implements IdentityInterface
      * @param StoreManagerInterface $storeManager
      * @param array $data
      * @param BlogSitemapConfigReader|null $blogsitemapConfigReader
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function __construct(
         Context $context,
-        StoreResolver $storeResolver,
         CollectionFactory $blogsitemapCollectionFactory,
         StoreManagerInterface $storeManager,
         array $data = [],
@@ -100,7 +100,7 @@ class Robots extends AbstractBlock implements IdentityInterface
      * @return array
      * @since 2.0.0
      */
-    protected function getBlogsitemapLinks(array $storeIds)
+    protected function getBlogsitemapLinks(array $storeIds): array
     {
         $collection = $this->blogsitemapCollectionFactory->create();
         $collection->addStoreFilter($storeIds);

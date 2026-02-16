@@ -49,7 +49,7 @@ class Delete extends BlogSitemap implements HttpPostActionInterface
      *
      * @return void
      */
-    public function execute()
+    public function execute(): void
     {
         $directory = $this->filesystem->getDirectoryWrite(DirectoryList::ROOT);
         // check if we know what should be deleted

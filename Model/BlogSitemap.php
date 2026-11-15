@@ -290,9 +290,9 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
             self::TYPE_INDEX => [
                 self::OPEN_TAG_KEY => '<?xml version="1.0" encoding="UTF-8"?>' .
                     PHP_EOL .
-                    '<blogsitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' .
+                    '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' .
                     PHP_EOL,
-                self::CLOSE_TAG_KEY => '</blogsitemapindex>',
+                self::CLOSE_TAG_KEY => '</sitemapindex>',
             ],
             self::TYPE_URL => [
                 self::OPEN_TAG_KEY => '<?xml version="1.0" encoding="UTF-8"?>' .
@@ -549,7 +549,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
             $row .= '<lastmod>' . $this->_getFormattedLastmodDate($lastmod) . '</lastmod>';
         }
 
-        return '<blogsitemap>' . $row . '</blogsitemap>';
+        return '<sitemap>' . $row . '</sitemap>';
     }
 
     /**

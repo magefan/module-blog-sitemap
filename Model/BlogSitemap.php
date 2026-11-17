@@ -188,6 +188,11 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
     private $filesystem;
 
     /**
+     * @var BlogSitemapResource
+     */
+    private $blogsitemapResource;
+
+    /**
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\Escaper $escaper
@@ -198,6 +203,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\App\RequestInterface $request
      * @param \Magento\Framework\Stdlib\DateTime $dateTime
+     * @param BlogSitemapResource $blogsitemapResource
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
@@ -217,6 +223,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Framework\Stdlib\DateTime $dateTime,
+        BlogSitemapResource $blogsitemapResource,
         ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = [],
@@ -233,6 +240,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
         $this->_storeManager = $storeManager;
         $this->_request = $request;
         $this->dateTime = $dateTime;
+        $this->blogsitemapResource = $blogsitemapResource;
         $this->itemProvider = $itemProvider ?: ObjectManager::getInstance()->get(ItemProviderInterface::class);
         $this->configReader = $configReader ?: ObjectManager::getInstance()->get(BlogSitemapConfigReaderInterface::class);
         $this->blogsitemapItemFactory = $blogsitemapItemFactory ?: ObjectManager::getInstance()->get(
@@ -406,7 +414,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
         }
 
         $this->setBlogSitemapTime($this->_dateModel->gmtDate('Y-m-d H:i:s'));
-        $this->_getResource()->save($this);
+        $this->blogsitemapResource->save($this);
 
         return $this;
     }

@@ -6,7 +6,6 @@
 
 namespace Magefan\BlogSitemap\Model;
 
-use Magento\Config\Model\Config\Reader\Source\Deployed\DocumentRoot;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\DataObject;
@@ -189,11 +188,6 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
     private $filesystem;
 
     /**
-     * @var DocumentRoot
-     */
-    private $documentRoot;
-
-    /**
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\Escaper $escaper
@@ -207,7 +201,6 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
-     * @param DocumentRoot|null $documentRoot
      * @param ItemProviderInterface|null $itemProvider
      * @param BlogSitemapConfigReaderInterface|null $configReader
      * @param BlogSitemapItemInterfaceFactory|null $blogsitemapItemFactory
@@ -227,7 +220,6 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
         ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = [],
-        ?\Magento\Config\Model\Config\Reader\Source\Deployed\DocumentRoot $documentRoot = null,
         ?ItemProviderInterface $itemProvider = null,
         ?BlogSitemapConfigReaderInterface $configReader = null,
         ?\Magefan\BlogSitemap\Model\BlogSitemapItemInterfaceFactory $blogsitemapItemFactory = null
@@ -414,7 +406,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
         }
 
         $this->setBlogSitemapTime($this->_dateModel->gmtDate('Y-m-d H:i:s'));
-        $this->save();
+        $this->_getResource()->save($this);
 
         return $this;
     }

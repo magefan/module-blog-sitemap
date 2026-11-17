@@ -73,7 +73,11 @@ class Edit extends BlogSitemap implements HttpGetActionInterface
         )->_addContent(
             $this->_view->getLayout()->createBlock(\Magefan\BlogSitemap\Block\Adminhtml\Edit::class)
         )->_addJs(
-            $this->_view->getLayout()->createBlock(Template::class)->setTemplate('Magefan_BlogSitemap::js.phtml')
+            $this->_view->getLayout()->createBlock(
+                Template::class,
+                '',
+                ['data' => ['template' => 'Magefan_BlogSitemap::js.phtml']]
+            )
         );
         $this->_view->getPage()->getConfig()->getTitle()->prepend(__('Blog Site Map'));
         $this->_view->getPage()->getConfig()->getTitle()->prepend(

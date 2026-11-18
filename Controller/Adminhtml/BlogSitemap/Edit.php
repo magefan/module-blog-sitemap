@@ -19,8 +19,6 @@ use Magefan\BlogSitemap\Controller\Adminhtml\BlogSitemap;
 class Edit extends BlogSitemap implements HttpGetActionInterface
 {
     /**
-     * Core registry
-     *
      * @var Registry
      */
     protected $_coreRegistry;

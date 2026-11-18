@@ -29,7 +29,7 @@ class Save extends BlogSitemap implements HttpPostActionInterface
     /**
      * Maximum length of blogsitemap filename
      */
-    const MAX_FILENAME_LENGTH = 32;
+    public const MAX_FILENAME_LENGTH = 32;
 
     /**
      * @var StringLength

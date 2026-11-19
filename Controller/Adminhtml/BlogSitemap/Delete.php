@@ -13,6 +13,7 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
 use Magefan\BlogSitemap\Controller\Adminhtml\BlogSitemap;
 use Magefan\BlogSitemap\Model\BlogSitemapFactory;
+use Magefan\BlogSitemap\Model\ResourceModel\BlogSitemap as BlogSitemapResource;
 
 /**
  * Controller class Delete. Represents adminhtml request flow for a blogsitemap deletion
@@ -30,17 +31,25 @@ class Delete extends BlogSitemap implements HttpPostActionInterface
     private $filesystem;
 
     /**
+     * @var BlogSitemapResource
+     */
+    private $blogsitemapResource;
+
+    /**
      * @param Context $context
      * @param BlogSitemapFactory $blogsitemapFactory
      * @param Filesystem $filesystem
+     * @param BlogSitemapResource $blogsitemapResource
      */
     public function __construct(
         Context $context,
         BlogSitemapFactory $blogsitemapFactory,
-        Filesystem $filesystem
+        Filesystem $filesystem,
+        BlogSitemapResource $blogsitemapResource
     ) {
         parent::__construct($context);
         $this->blogsitemapFactory = $blogsitemapFactory;
+        $this->blogsitemapResource = $blogsitemapResource;
         $this->filesystem = $filesystem;
     }
 
@@ -59,7 +68,7 @@ class Delete extends BlogSitemap implements HttpPostActionInterface
                 // init model and delete
                 /** @var \Magefan\BlogSitemap\Model\BlogSitemap $blogsitemap */
                 $blogsitemap = $this->blogsitemapFactory->create();
-                $blogsitemap->load($id);
+                $this->blogsitemapResource->load($blogsitemap, $id);
                 // delete file
                 $blogsitemapPath = $blogsitemap->getBlogsitemapPath();
                 if ($blogsitemapPath && $blogsitemapPath[0] === DIRECTORY_SEPARATOR) {
@@ -72,7 +81,7 @@ class Delete extends BlogSitemap implements HttpPostActionInterface
                 if ($blogsitemap->getBlogsitemapFilename() && $directory->isFile($path)) {
                     $directory->delete($path);
                 }
-                $blogsitemap->delete();
+                $this->blogsitemapResource->delete($blogsitemap);
                 // display success message
                 $this->messageManager->addSuccessMessage(__('You deleted the blogsitemap.'));
                 // go to grid

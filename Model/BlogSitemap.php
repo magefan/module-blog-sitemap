@@ -6,7 +6,6 @@
 
 namespace Magefan\BlogSitemap\Model;
 
-use Magento\Config\Model\Config\Reader\Source\Deployed\DocumentRoot;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\DataObject;
@@ -37,7 +36,8 @@ use Magefan\BlogSitemap\Model\ResourceModel\BlogSitemap as BlogSitemapResource;
  * @api
  * @since 2.0.0
  */
-class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Magento\Framework\DataObject\IdentityInterface
+class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements
+    \Magento\Framework\DataObject\IdentityInterface
 {
     public const OPEN_TAG_KEY = 'start';
 
@@ -189,9 +189,9 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
     private $filesystem;
 
     /**
-     * @var DocumentRoot
+     * @var BlogSitemapResource
      */
-    private $documentRoot;
+    private $blogsitemapResource;
 
     /**
      * @param \Magento\Framework\Model\Context $context
@@ -204,10 +204,10 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\App\RequestInterface $request
      * @param \Magento\Framework\Stdlib\DateTime $dateTime
+     * @param BlogSitemapResource $blogsitemapResource
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
-     * @param DocumentRoot|null $documentRoot
      * @param ItemProviderInterface|null $itemProvider
      * @param BlogSitemapConfigReaderInterface|null $configReader
      * @param BlogSitemapItemInterfaceFactory|null $blogsitemapItemFactory
@@ -224,10 +224,10 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Framework\Stdlib\DateTime $dateTime,
+        BlogSitemapResource $blogsitemapResource,
         ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = [],
-        ?\Magento\Config\Model\Config\Reader\Source\Deployed\DocumentRoot $documentRoot = null,
         ?ItemProviderInterface $itemProvider = null,
         ?BlogSitemapConfigReaderInterface $configReader = null,
         ?\Magefan\BlogSitemap\Model\BlogSitemapItemInterfaceFactory $blogsitemapItemFactory = null
@@ -241,8 +241,11 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
         $this->_storeManager = $storeManager;
         $this->_request = $request;
         $this->dateTime = $dateTime;
+        $this->blogsitemapResource = $blogsitemapResource;
         $this->itemProvider = $itemProvider ?: ObjectManager::getInstance()->get(ItemProviderInterface::class);
-        $this->configReader = $configReader ?: ObjectManager::getInstance()->get(BlogSitemapConfigReaderInterface::class);
+        $this->configReader = $configReader ?: ObjectManager::getInstance()->get(
+            BlogSitemapConfigReaderInterface::class
+        );
         $this->blogsitemapItemFactory = $blogsitemapItemFactory ?: ObjectManager::getInstance()->get(
             \Magefan\BlogSitemap\Model\BlogSitemapItemInterfaceFactory::class
         );
@@ -347,7 +350,9 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
         /**
          * Check allow filename
          */
-        if ($this->getBlogsitemapFilename() === null || !preg_match('#^[a-zA-Z0-9_\.]+$#', $this->getBlogsitemapFilename())) {
+        if ($this->getBlogsitemapFilename() === null
+            || !preg_match('#^[a-zA-Z0-9_\.]+$#', $this->getBlogsitemapFilename())
+        ) {
             throw new LocalizedException(
                 __(
                     'Please use only letters (a-z or A-Z), numbers (0-9) or underscores (_) in the filename.'
@@ -359,7 +364,9 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
             $this->setBlogSitemapFilename($this->getBlogsitemapFilename() . '.xml');
         }
 
-        $this->setBlogSitemapPath(rtrim(str_replace(str_replace('\\', '/', $this->_getBaseDir()), '', $path), '/') . '/');
+        $this->setBlogSitemapPath(
+            rtrim(str_replace(str_replace('\\', '/', $this->_getBaseDir()), '', $path), '/') . '/'
+        );
 
         return parent::beforeSave();
     }
@@ -414,7 +421,7 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
         }
 
         $this->setBlogSitemapTime($this->_dateModel->gmtDate('Y-m-d H:i:s'));
-        $this->save();
+        $this->blogsitemapResource->save($this);
 
         return $this;
     }
@@ -428,7 +435,10 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
     {
         $this->_createBlogSitemap($this->getBlogsitemapFilename(), self::TYPE_INDEX);
         for ($i = 1; $i <= $this->_blogsitemapIncrement; $i++) {
-            $xml = $this->_getBlogsitemapIndexRow($this->_getCurrentBlogSitemapFilename($i), $this->_getCurrentDateTime());
+            $xml = $this->_getBlogsitemapIndexRow(
+                $this->_getCurrentBlogSitemapFilename($i),
+                $this->_getCurrentDateTime()
+            );
             $this->_writeBlogSitemapRow($xml);
         }
         $this->_finalizeBlogSitemap(self::TYPE_INDEX);
@@ -479,8 +489,13 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      * BlogSitemap PageMap
      * @see http://support.google.com/customsearch/bin/answer.py?hl=en&answer=1628213
      */
-    protected function _getBlogsitemapRow($url, $lastmod = null, $changefreq = null, $priority = null, $images = null): string
-    {
+    protected function _getBlogsitemapRow(
+        $url,
+        $lastmod = null,
+        $changefreq = null,
+        $priority = null,
+        $images = null
+    ): string {
         $url = $this->_getUrl($url);
         $row = '<loc>' . $this->_escaper->escapeUrl($url) . '</loc>';
         if ($lastmod) {
@@ -510,7 +525,8 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
             }
             // Add PageMap image for Google web search
             /*
-            $row .= '<PageMap xmlns="http://www.google.com/schemas/blogsitemap-pagemap/1.0"><DataObject type="thumbnail">';
+            $row .= '<PageMap xmlns="http://www.google.com/schemas/blogsitemap-pagemap/1.0">'
+                . '<DataObject type="thumbnail">';
             $row .= '<Attribute name="name" value="' . $this->_escaper->escapeHtmlAttr($images->getTitle()) . '"/>';
             $row .= '<Attribute name="src" value="' . $this->_escaper->escapeUrl($images->getThumbnail()) . '"/>';
             $row .= '</DataObject></PageMap>';
@@ -612,7 +628,8 @@ class BlogSitemap extends \Magento\Framework\Model\AbstractModel implements \Mag
      */
     protected function _getCurrentBlogSitemapFilename($index): string
     {
-        return ($this->getBlogsitemapFilename() !== null ? str_replace('.xml', '', $this->getBlogsitemapFilename()) : '')
+        return ($this->getBlogsitemapFilename() !== null
+            ? str_replace('.xml', '', $this->getBlogsitemapFilename()) : '')
             . '-' . $this->getStoreId() . '-' . $index . '.xml';
     }
 

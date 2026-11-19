@@ -19,6 +19,7 @@ use Magento\MediaStorage\Model\File\Validator\AvailablePath;
 use Magefan\BlogSitemap\Controller\Adminhtml\BlogSitemap;
 use Magefan\BlogSitemap\Model\BlogSitemapConfigReaderInterface;
 use Magefan\BlogSitemap\Model\BlogSitemapFactory;
+use Magefan\BlogSitemap\Model\ResourceModel\BlogSitemap as BlogSitemapResource;
 
 /**
  * Save blogsitemap controller.
@@ -28,7 +29,7 @@ class Save extends BlogSitemap implements HttpPostActionInterface
     /**
      * Maximum length of blogsitemap filename
      */
-    const MAX_FILENAME_LENGTH = 32;
+    public const MAX_FILENAME_LENGTH = 32;
 
     /**
      * @var StringLength
@@ -56,6 +57,11 @@ class Save extends BlogSitemap implements HttpPostActionInterface
     private $blogsitemapFactory;
 
     /**
+     * @var BlogSitemapResource
+     */
+    private $blogsitemapResource;
+
+    /**
      * Save constructor.
      * @param Context $context
      * @param StringLength $stringValidator
@@ -63,6 +69,7 @@ class Save extends BlogSitemap implements HttpPostActionInterface
      * @param BlogSitemapConfigReaderInterface $blogSitemapConfigReader
      * @param Filesystem $filesystem
      * @param BlogSitemapFactory $blogsitemapFactory
+     * @param BlogSitemapResource $blogsitemapResource
      */
     public function __construct(
         Context $context,
@@ -70,7 +77,8 @@ class Save extends BlogSitemap implements HttpPostActionInterface
         AvailablePath $pathValidator,
         BlogSitemapConfigReaderInterface $blogSitemapConfigReader,
         Filesystem $filesystem,
-        BlogSitemapFactory $blogsitemapFactory
+        BlogSitemapFactory $blogsitemapFactory,
+        BlogSitemapResource $blogsitemapResource
     ) {
         parent::__construct($context);
         $this->stringValidator = $stringValidator;
@@ -78,6 +86,7 @@ class Save extends BlogSitemap implements HttpPostActionInterface
         $this->blogSitemapConfigReader = $blogSitemapConfigReader;
         $this->filesystem = $filesystem;
         $this->blogsitemapFactory = $blogsitemapFactory;
+        $this->blogsitemapResource = $blogsitemapResource;
     }
 
     /**
@@ -131,7 +140,7 @@ class Save extends BlogSitemap implements HttpPostActionInterface
         $directory = $this->filesystem->getDirectoryWrite(DirectoryList::ROOT);
 
         if ($this->getRequest()->getParam('blogsitemap_id')) {
-            $model->load($this->getRequest()->getParam('blogsitemap_id'));
+            $this->blogsitemapResource->load($model, $this->getRequest()->getParam('blogsitemap_id'));
             $fileName = $model->getBlogsitemapFilename();
 
             $path = $model->getBlogsitemapPath() . '/' . $fileName;
@@ -158,7 +167,7 @@ class Save extends BlogSitemap implements HttpPostActionInterface
         // try to save it
         try {
             // save the data
-            $model->save();
+            $this->blogsitemapResource->save($model);
             // display success message
             $this->messageManager->addSuccessMessage(__('You saved the blogsitemap.'));
             // clear previously saved data from session
